@@ -1,12 +1,11 @@
-================================================================
 PROJET NLP 2 — ASSURVISION
 Analyse d'avis clients d'assurance
 Marcel Yammine & Thomas Wartelle | 2025-2026
-================================================================
+
 
 
 CONTENU DU DOSSIER
-================================================================
+
 
 Projet2/
   Projet_NLP2_FINAL_Yammine_Wartelle.ipynb   -> Notebook complet
