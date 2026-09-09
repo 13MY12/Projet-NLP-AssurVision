@@ -1,186 +1,326 @@
-PROJET NLP 2 — ASSURVISION
-Analyse d'avis clients d'assurance
-Marcel Yammine & Thomas Wartelle | 2025-2026
+# PROJET NLP 2 — ASSURVISION
 
+## Analyse d'avis clients d'assurance
 
+**Marcel Yammine & Thomas Wartelle | 2025–2026**
 
-CONTENU DU DOSSIER
+---
 
+## Contenu du dossier
 
+```text
 Projet2/
-  Projet_NLP2_FINAL_Yammine_Wartelle.ipynb   -> Notebook complet
-  app_insuranalytics.py                       -> Application Streamlit
-  df_final.csv                                -> Dataset final
-  df_clean.csv                                -> Dataset nettoye
-  df_complet.csv                              -> Dataset avec traduction/resume
-  tfidf_vectorizer.pkl                        -> Modele TF-IDF
-  lr_sentiment_model.pkl                      -> Modele sentiment
-  lr_topic_model.pkl                          -> Modele topics
-  lr_stars_model.pkl                          -> Modele etoiles
-  resumes_assureur.csv                        -> Resumes par assureur
-  Presentation_NLP2_AssurVision.pptx          -> Presentation
-  video_presentation.mp4                      -> Video de presentation (7 min)
-  avis_1_traduit.xlsx ... avis_35_traduit.xlsx -> Donnees brutes
-  README.txt                                  -> Ce fichier
+├── Projet_NLP2_FINAL_Yammine_Wartelle.ipynb    # Notebook complet
+├── app_insuranalytics.py                       # Application Streamlit
+├── df_final.csv                                # Dataset final
+├── df_clean.csv                                # Dataset nettoyé
+├── df_complet.csv                              # Dataset avec traduction/résumé
+├── tfidf_vectorizer.pkl                        # Modèle TF-IDF
+├── lr_sentiment_model.pkl                      # Modèle de sentiment
+├── lr_topic_model.pkl                          # Modèle de classification des topics
+├── lr_stars_model.pkl                          # Modèle de prédiction des étoiles
+├── resumes_assureur.csv                        # Résumés par assureur
+├── Presentation_NLP2_AssurVision.pptx          # Présentation
+├── video_presentation.mp4                      # Vidéo de présentation
+├── avis_1_traduit.xlsx ... avis_35_traduit.xlsx # Données brutes
+└── README.md                                   # Documentation du projet
+```
 
+---
 
-================================================================
-IMPORTANT : VISUALISATION DES GRAPHIQUES
-================================================================
+## Important — Visualisation des graphiques
 
-Les graphiques interactifs (Plotly) ne s'affichent PAS dans
-Jupyter Notebook en local. Pour voir tous les graphiques :
+Les graphiques interactifs **Plotly** ne s'affichent pas nécessairement dans Jupyter Notebook en local.
 
--> Ouvrir le notebook dans Google Colab :
-   https://colab.research.google.com
-   Fichier > Importer un notebook > Upload
+Pour visualiser correctement l'ensemble des graphiques, il est recommandé d'ouvrir le notebook dans **Google Colab** :
 
-Les graphiques Plotly et pyLDAvis sont rendus dynamiquement
-et ne sont visibles que dans Google Colab ou dans un
-navigateur compatible.
+1. Aller sur https://colab.research.google.com
+2. Sélectionner `Fichier > Importer un notebook`
+3. Uploader `Projet_NLP2_FINAL_Yammine_Wartelle.ipynb`
 
+Les visualisations **Plotly** et **pyLDAvis** sont rendues dynamiquement et sont donc plus facilement accessibles depuis Google Colab ou un navigateur compatible.
 
-================================================================
-OPTION 1 : LANCER L'APPLICATION EN LOCAL (LE PLUS SIMPLE)
-================================================================
+---
 
-L'application fonctionne directement avec les fichiers fournis.
-Pas besoin de re-executer le notebook.
+# Option 1 — Lancer l'application en local
 
-Etape 1 : Installer Python si pas deja fait
-   https://www.python.org/downloads/
-   Cocher "Add Python to PATH" pendant l'installation
+L'application fonctionne directement avec les fichiers fournis.  
+Il n'est pas nécessaire de réexécuter le notebook.
 
-Etape 2 : Installer les dependances
-   Ouvrir un terminal (cmd) et taper :
-   pip install streamlit pandas numpy plotly matplotlib scikit-learn sentence-transformers
+### Étape 1 — Installer Python
 
-Etape 3 : Mettre ces fichiers dans le meme dossier :
-   - app_insuranalytics.py
-   - df_final.csv
-   - tfidf_vectorizer.pkl
-   - lr_sentiment_model.pkl
-   - lr_topic_model.pkl
-   - lr_stars_model.pkl
-   - resumes_assureur.csv
+Télécharger Python depuis :
 
-Etape 4 : Lancer l'application
-   Ouvrir un terminal dans le dossier et taper :
-   python -m streamlit run app_insuranalytics.py
+https://www.python.org/downloads/
 
-   L'application s'ouvre dans le navigateur a http://localhost:8501
+Lors de l'installation, cocher :
 
+```text
+Add Python to PATH
+```
 
-================================================================
-OPTION 2 : EXECUTER LE NOTEBOOK SUR GOOGLE COLAB
-================================================================
+### Étape 2 — Installer les dépendances
 
-Le notebook a deja ete execute et les resultats sont visibles.
-Si vous souhaitez re-executer certaines parties :
+Ouvrir un terminal (`cmd`) et exécuter :
 
-Etape 1 : Ouvrir le notebook dans Google Colab
-   Runtime > Change runtime type > GPU T4
+```bash
+pip install streamlit pandas numpy plotly matplotlib scikit-learn sentence-transformers
+```
 
-Etape 2 : Uploader les fichiers CSV fournis
-   - df_clean.csv (pour demarrer a partir de la partie C)
-   - df_complet.csv (pour demarrer a partir de la partie D ou E)
+### Étape 3 — Vérifier les fichiers
 
-Etape 3 : Pour re-executer a partir de la partie D (Embeddings) :
-   Ajouter cette cellule au debut :
+Les fichiers suivants doivent être placés dans le même dossier :
 
-   import pandas as pd
-   df = pd.read_csv('df_complet.csv')
-   print(f"{df.shape[0]} lignes chargees")
+```text
+app_insuranalytics.py
+df_final.csv
+tfidf_vectorizer.pkl
+lr_sentiment_model.pkl
+lr_topic_model.pkl
+lr_stars_model.pkl
+resumes_assureur.csv
+```
 
-   Puis executer les cellules a partir de la partie D.
+### Étape 4 — Lancer l'application
 
-Etape 4 : Pour re-executer a partir de la partie E (Supervised Learning) :
-   Meme chose, charger df_complet.csv puis executer a partir de la partie E.
-   Temps estime : 40 minutes avec GPU T4.
+Dans un terminal ouvert dans le dossier du projet :
 
-Note : Les parties A (cleaning), B (traduction) et C (topic modeling)
-prennent environ 1h. Les fichiers CSV fournis permettent de les sauter.
+```bash
+python -m streamlit run app_insuranalytics.py
+```
 
+L'application s'ouvrira dans le navigateur à l'adresse :
 
-================================================================
-OPTION 3 : LANCER L'APPLICATION STREAMLIT SUR GOOGLE COLAB
-================================================================
+```text
+http://localhost:8501
+```
 
-Si vous souhaitez lancer l'application AssurVision depuis Colab :
+---
 
-Etape 1 : Uploader ces fichiers dans Colab (panneau fichiers a gauche) :
-   - app_insuranalytics.py
-   - df_final.csv
-   - tfidf_vectorizer.pkl
-   - lr_sentiment_model.pkl
-   - lr_topic_model.pkl
-   - lr_stars_model.pkl
-   - resumes_assureur.csv
+# Option 2 — Exécuter le notebook sur Google Colab
 
-Etape 2 : Creer un compte gratuit sur https://ngrok.com
-   (ngrok est un service de tunneling qui cree un lien public
-   temporaire pour acceder a l'application sur Colab)
+Le notebook fourni a déjà été exécuté et les résultats sont visibles.
 
-Etape 3 : Recuperer votre token ngrok :
-   - Aller sur https://dashboard.ngrok.com/authtokens
-   - Copier le token affiche
+Pour réexécuter certaines parties du pipeline :
 
-Etape 4 : Dans la derniere cellule du notebook, remplacer
-   NGROK_TOKEN = "VOTRE_TOKEN_ICI"
-   par votre token personnel, exemple :
-   NGROK_TOKEN = "2abc123xyz..."
+### Étape 1 — Configurer Google Colab
 
-Etape 5 : Executer la derniere cellule du notebook.
-   Un lien s'affiche (ex: https://xxxx.ngrok-free.dev)
-   Cliquer dessus pour ouvrir l'application.
+Ouvrir le notebook dans Google Colab puis sélectionner :
 
+```text
+Runtime > Change runtime type > GPU T4
+```
 
+### Étape 2 — Uploader les datasets intermédiaires
 
-================================================================
-DESCRIPTION DE L'APPLICATION ASSURVISION (6 onglets)
-================================================================
+Selon la partie à exécuter, uploader :
 
-1. PREDICTION
-   Saisir un avis client -> obtenir le sentiment (positif/negatif),
-   les etoiles predites (1-5) et le theme detecte.
+```text
+df_clean.csv
+```
 
-2. RESUME
-   Selectionner un assureur -> voir les metriques (note moyenne,
-   nombre d'avis, % positifs), le resume IA et des graphiques.
+pour reprendre à partir de la partie C, ou :
 
-3. EXPLICATION
-   Saisir un avis -> voir les 15 mots les plus influents
-   (vert = positif, rouge = negatif).
+```text
+df_complet.csv
+```
 
-4. RECHERCHE
-   Filtrer les avis par assureur, note, theme et mot-cle.
+pour reprendre à partir de la partie D ou E.
 
-5. RAG (Retrieval-Augmented Generation)
-   Poser une question en langage naturel -> le systeme retrouve
-   les avis pertinents et genere une synthese automatique.
+### Étape 3 — Reprendre à partir de la partie D : Embeddings
 
-6. QA (Question-Answering)
-   Poser des questions comme "quel est le meilleur assureur ?"
-   et obtenir une reponse structuree avec graphiques.
+Ajouter cette cellule au début :
 
+```python
+import pandas as pd
 
-================================================================
-VIDEO DE PRESENTATION
-================================================================
+df = pd.read_csv("df_complet.csv")
+print(f"{df.shape[0]} lignes chargées")
+```
 
-Le fichier video_presentation.mp4 contient une presentation
-de 5 minutes couvrant :
-- Le pipeline NLP complet (parties A a F)
-- La demonstration live de l'application AssurVision
-- Les resultats et l'interpretation
+Puis exécuter les cellules à partir de la **partie D**.
 
+### Étape 4 — Reprendre à partir de la partie E : Supervised Learning
 
-================================================================
-RESULTATS PRINCIPAUX
-================================================================
+Charger de la même manière :
 
-Meilleur modele sentiment : Random Forest + TF-IDF -> 84.8%
-Prediction etoiles (5 classes) : 53.4% (MAE = 0.61)
-Dataset : 34 415 avis, 50+ assureurs, note moyenne 2.85/5
-Dataset reequilibre : 9 731 positifs + 9 731 negatifs
-9 modeles compares (TF-IDF, Embedding, CNN, LSTM, USE, CamemBERT)
+```python
+import pandas as pd
+
+df = pd.read_csv("df_complet.csv")
+print(f"{df.shape[0]} lignes chargées")
+```
+
+Puis exécuter les cellules à partir de la **partie E**.
+
+**Temps estimé : environ 40 minutes avec un GPU T4.**
+
+> **Note :** les parties A (cleaning), B (traduction) et C (topic modeling) prennent environ 1 heure. Les fichiers CSV intermédiaires fournis permettent de sauter ces étapes.
+
+---
+
+# Option 3 — Lancer l'application Streamlit sur Google Colab
+
+L'application AssurVision peut également être lancée directement depuis Google Colab grâce à **ngrok**.
+
+### Étape 1 — Uploader les fichiers
+
+Uploader dans le panneau de fichiers de Google Colab :
+
+```text
+app_insuranalytics.py
+df_final.csv
+tfidf_vectorizer.pkl
+lr_sentiment_model.pkl
+lr_topic_model.pkl
+lr_stars_model.pkl
+resumes_assureur.csv
+```
+
+### Étape 2 — Créer un compte ngrok
+
+Créer un compte gratuit sur :
+
+https://ngrok.com
+
+ngrok permet de créer un tunnel donnant temporairement accès à l'application Streamlit exécutée sur Google Colab.
+
+### Étape 3 — Récupérer le token ngrok
+
+Accéder à :
+
+https://dashboard.ngrok.com/authtokens
+
+Puis copier le token affiché.
+
+### Étape 4 — Ajouter le token
+
+Dans la dernière cellule du notebook, remplacer :
+
+```python
+NGROK_TOKEN = "VOTRE_TOKEN_ICI"
+```
+
+par votre token personnel :
+
+```python
+NGROK_TOKEN = "2abc123xyz..."
+```
+
+### Étape 5 — Lancer l'application
+
+Exécuter la dernière cellule du notebook.
+
+Un lien similaire à celui-ci sera généré :
+
+```text
+https://xxxx.ngrok-free.dev
+```
+
+Cliquer sur ce lien pour accéder à l'application AssurVision.
+
+---
+
+# Application AssurVision
+
+L'application comporte **6 onglets principaux**.
+
+## 1. Prédiction
+
+Saisir un avis client afin d'obtenir :
+
+- le sentiment prédit : **positif ou négatif** ;
+- le nombre d'étoiles prédit : **1 à 5** ;
+- le thème détecté.
+
+## 2. Résumé
+
+Sélectionner un assureur pour afficher :
+
+- sa note moyenne ;
+- son nombre d'avis ;
+- son pourcentage d'avis positifs ;
+- un résumé généré par IA ;
+- différentes visualisations.
+
+## 3. Explication
+
+Saisir un avis afin de visualiser les **15 mots les plus influents** dans la prédiction du modèle :
+
+- vert : influence positive ;
+- rouge : influence négative.
+
+## 4. Recherche
+
+Explorer les avis grâce à différents filtres :
+
+- assureur ;
+- note ;
+- thème ;
+- mot-clé.
+
+## 5. RAG — Retrieval-Augmented Generation
+
+Poser une question en langage naturel.
+
+Le système :
+
+1. recherche les avis les plus pertinents ;
+2. récupère le contexte correspondant ;
+3. génère une synthèse à partir des informations retrouvées.
+
+## 6. QA — Question Answering
+
+Poser des questions telles que :
+
+```text
+Quel est le meilleur assureur ?
+```
+
+Le système fournit une réponse structurée accompagnée de graphiques lorsque cela est pertinent.
+
+---
+
+# Vidéo de présentation
+
+Le fichier :
+
+```text
+video_presentation.mp4
+```
+
+contient une présentation du projet couvrant :
+
+- le pipeline NLP complet, des parties A à F ;
+- une démonstration de l'application AssurVision ;
+- les principaux résultats ;
+- leur interprétation.
+
+---
+
+# Résultats principaux
+
+| Élément | Résultat |
+|---|---:|
+| Dataset | **34 415 avis** |
+| Nombre d'assureurs | **50+** |
+| Note moyenne | **2,85 / 5** |
+| Dataset rééquilibré | **9 731 positifs + 9 731 négatifs** |
+| Meilleur modèle de sentiment | **Random Forest + TF-IDF** |
+| Accuracy sentiment | **84,8 %** |
+| Prédiction des étoiles | **53,4 %** |
+| MAE étoiles | **0,61** |
+| Modèles comparés | **9** |
+
+Les approches étudiées incluent notamment :
+
+**TF-IDF, Embeddings, CNN, LSTM, USE et CamemBERT.**
+
+---
+
+## Auteurs
+
+**Marcel Yammine**  
+**Thomas Wartelle**
+
+Projet NLP 2 — **2025–2026**
